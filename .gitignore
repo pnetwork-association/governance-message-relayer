@@ -1,0 +1,13 @@
+node_modules/
+.DS_Store
+.openzeppelin
+.env
+*.sw*
+
+#Hardhat files
+cache
+artifacts
+
+coverage.json
+blocks.json
+receipts.json
