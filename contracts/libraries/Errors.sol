@@ -8,4 +8,7 @@ library Errors {
     error InvalidReceiptsRootMerkleProof();
     error InvalidRootHashMerkleProof();
     error InvalidHeaderBlock();
+    error InvalidSourceChainId(uint32 chainId, uint32 expectedChainId);
+    error NotRouter(address sender, address router);
+    error NotGovernanceMessageVerifier(address sender, address governanceMessageVerifier);
 }

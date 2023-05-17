@@ -3,7 +3,7 @@
 pragma solidity 0.8.18;
 
 /**
- * @title IPFactory
+ * @title IGovernanceMessageVerifier
  * @author pNetwork
  *
  * @notice
@@ -25,7 +25,11 @@ interface IGovernanceMessageVerifier {
         uint256 headerBlock;
     }
 
-    event GovernanceMessage(bytes value);
+    event GovernanceMessagePropagated(bytes data);
 
-    function verifyMessage(GovernanceMessageProof calldata proof) external;
+    function verifyAndPropagateMessage(
+        GovernanceMessageProof calldata proof,
+        uint32[] calldata chainIds,
+        address[] calldata destinationAddresses
+    ) external;
 }
