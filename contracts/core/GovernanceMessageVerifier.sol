@@ -64,8 +64,12 @@ contract GovernanceMessageVerifier is IGovernanceMessageVerifier {
 
         bytes memory data = RLPReader.toBytes(log[2]);
 
-        for (uint256 index = 0; index < chainIds.length; index++) {
+        for (uint256 index = 0; index < chainIds.length; ) {
             ITelepathyRouter(TELEPATHY_ROUTER).send(chainIds[index], destinationAddresses[index], data);
+
+            unchecked {
+                ++index;
+            }
         }
 
         emit GovernanceMessagePropagated(data);

@@ -9,6 +9,8 @@ require('hardhat-log-remover')
 require('solidity-coverage')
 require('@nomicfoundation/hardhat-toolbox')
 
+require('./tasks/deploy')
+
 const getEnvironmentVariable = (_envVar) => process.env[_envVar] || ''
 
 /**
@@ -41,7 +43,7 @@ module.exports = {
     mainnet: {
       url: getEnvironmentVariable('MAINNET_NODE'),
       accounts: [getEnvironmentVariable('PK')],
-      gasPrice: 20e9
+      gasPrice: 45e9
     },
     polygon: {
       url: getEnvironmentVariable('POLYGON_NODE'),
@@ -61,12 +63,23 @@ module.exports = {
     sepolia: {
       url: getEnvironmentVariable('SEPOLIA_NODE'),
       accounts: [getEnvironmentVariable('PK')]
+    },
+    mumbai: {
+      url: getEnvironmentVariable('MUMBAI_NODE'),
+      accounts: [getEnvironmentVariable('PK')],
+      gasPrice: 1000
+    },
+    goerli: {
+      url: getEnvironmentVariable('GOERLI_NODE'),
+      accounts: [getEnvironmentVariable('PK')],
+      gasPrice: 90e9
     }
   },
   etherscan: {
     apiKey: {
       mainnet: getEnvironmentVariable('ETHERSCAN_API_KEY'),
-      polygon: getEnvironmentVariable('POLYGONSCAN_API_KEY')
+      polygon: getEnvironmentVariable('POLYGONSCAN_API_KEY'),
+      bsc: getEnvironmentVariable('BSCSCAN_API_KEY')
     },
     customChains: [
       {
@@ -91,6 +104,14 @@ module.exports = {
         urls: {
           apiURL: 'https://api.mumbai.polygonscan.com/api',
           browserURL: 'https://mumbai.polygonscan.com/'
+        }
+      },
+      {
+        network: 'goerli',
+        chainId: 5,
+        urls: {
+          apiURL: 'https://api-goerli.etherscan.io/',
+          browserURL: 'https://goerli.etherscan.io/'
         }
       }
     ]

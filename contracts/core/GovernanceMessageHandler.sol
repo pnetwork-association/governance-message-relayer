@@ -20,11 +20,11 @@ contract GovernanceMessageHandler is IGovernanceMessageHandler {
         uint32 sourceChainId_,
         address senderAddress,
         bytes memory data
-    ) external returns (bytes32) {
+    ) external returns (bytes4) {
         if (msg.sender != TELEPATHY_ROUTER) revert Errors.NotRouter(msg.sender, TELEPATHY_ROUTER);
         if (sourceChainId != sourceChainId_) revert Errors.InvalidSourceChainId(sourceChainId_, sourceChainId);
         if (senderAddress != governanceMessageVerifier)
-            revert Errors.NotGovernanceMessageVerifier(senderAddress, governanceMessageVerifier);
+        revert Errors.NotGovernanceMessageVerifier(senderAddress, governanceMessageVerifier);
 
         emit GovernanceMessageReceived(data);
 
