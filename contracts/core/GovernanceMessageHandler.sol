@@ -24,7 +24,7 @@ contract GovernanceMessageHandler is IGovernanceMessageHandler {
         if (msg.sender != TELEPATHY_ROUTER) revert Errors.NotRouter(msg.sender, TELEPATHY_ROUTER);
         if (sourceChainId != sourceChainId_) revert Errors.InvalidSourceChainId(sourceChainId_, sourceChainId);
         if (senderAddress != governanceMessageVerifier)
-        revert Errors.NotGovernanceMessageVerifier(senderAddress, governanceMessageVerifier);
+            revert Errors.NotGovernanceMessageVerifier(senderAddress, governanceMessageVerifier);
 
         emit GovernanceMessageReceived(data);
 

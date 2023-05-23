@@ -12,7 +12,7 @@ import {MerklePatriciaProof} from "../libraries/MerklePatriciaProof.sol";
 contract GovernanceMessageVerifier is IGovernanceMessageVerifier {
     address public constant TELEPATHY_ROUTER = 0x41EA857C32c8Cb42EEFa00AF67862eCFf4eB795a;
     address public constant ROOT_CHAIN_ADDRESS = 0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287;
-    address public constant GOVERNANCE_ADDRESS = 0x445fB5227A63448672F19A172EFCB106C7c99EF9;
+    address public constant GOVERNANCE_MESSAGE_PROPAGATOR = 0x445fB5227A63448672F19A172EFCB106C7c99EF9;
     bytes32 public constant EVENT_SIGNATURE_TOPIC = 0x85aab78efe4e39fd3b313a465f645990e6a1b923f5f5b979957c176e632c5a07; //keccak256(GovernanceMessage(bytes));
 
     function verifyAndPropagateMessage(
@@ -27,9 +27,12 @@ contract GovernanceMessageVerifier is IGovernanceMessageVerifier {
         RLPReader.RLPItem[] memory logs = RLPReader.toList(receiptData[3]);
         RLPReader.RLPItem[] memory log = RLPReader.toList(logs[proof.logIndex]);
 
-        address proofGovernanceAddress = RLPReader.toAddress(log[0]);
-        if (GOVERNANCE_ADDRESS != proofGovernanceAddress) {
-            revert Errors.InvalidGovernanceAddress(GOVERNANCE_ADDRESS, proofGovernanceAddress);
+        address proofGovernanceMessagePropagator = RLPReader.toAddress(log[0]);
+        if (GOVERNANCE_MESSAGE_PROPAGATOR != proofGovernanceMessagePropagator) {
+            revert Errors.InvalidGovernanceMessagePropagator(
+                GOVERNANCE_MESSAGE_PROPAGATOR,
+                proofGovernanceMessagePropagator
+            );
         }
 
         RLPReader.RLPItem[] memory topics = RLPReader.toList(log[1]);
