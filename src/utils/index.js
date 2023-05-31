@@ -21,7 +21,7 @@ const getBytesEncodedReceipt = (_receipt) => {
   })
 
   if (_receipt.type === 0) {
-    return RLP.encode([_receipt.status, _receipt.cumulativeGasUsed, _receipt.logsBloom, logs])
+    return Buffer.from(RLP.encode([_receipt.status, _receipt.cumulativeGasUsed, _receipt.logsBloom, logs]))
   }
 
   return Buffer.concat([
